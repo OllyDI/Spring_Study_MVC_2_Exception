@@ -40,6 +40,8 @@ public class ErrorPageController {
         return "/error-page/500";
     }
 
+
+    // Accept가 application/json인 경우에만 호출 -> 서블릿을 이용한 api 에러 처리
     @RequestMapping(value = "/error-page/500", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String, Object>> errorPage500Api(HttpServletRequest req, HttpServletResponse res) {
         log.info("API errorPage 500");
@@ -52,6 +54,7 @@ public class ErrorPageController {
         Integer statusCode = (Integer) req.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
         return new ResponseEntity<>(result, HttpStatus.valueOf(statusCode));
     }
+
 
     private void printErrorInfo(HttpServletRequest req) {
         log.info("ERROR_EXCEPTION_TYPE: {}", req.getAttribute(ERROR_EXCEPTION_TYPE));
